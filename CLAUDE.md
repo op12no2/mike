@@ -6,7 +6,7 @@
 - AMD Ryzen 9950x 64Gb.
 - NVIDIA RTX 5070Ti 16Gb.
 - Raspberry Pi 5 8Gb + active heatsink + 128Gb micro SD card.
-- Espressif ESP32-DevKitC V4.
+- Espressif ESP32-DevKitC V4 mirco-controller.
 - Axial 1/10 SCX10 III Base Camp 4WD Rock Crawler Builders Kit.
 - Spektrum Accessories Firma 2-in-1 Brushless Crawler Motor/ESC: 1400Kv.
 - Spektrum S6295 1/8 HV High Speed High Torque Brushless Metal Gear Servo. 
