@@ -204,5 +204,5 @@ When the PC is unavailable, Mike should still be able to recognise a limited set
 * Prefer parts with strong long-term availability and community support.
 * Outdoor components must eventually account for Gower rain, wind, sand and salt air.
 * Development should maximise joy rather than optimisation for its own sake.
-
+* Bicentennial Man
 
