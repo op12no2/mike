@@ -1,4 +1,4 @@
-# mike
+# Mike
 
 Grumpy companion rover for Colin's grandchildren. Persona: Marvin-adjacent —
 reluctant, put-upon, secretly devoted. The goal is theatre, not utility: he
@@ -17,7 +17,7 @@ Two computers, one wire:
   ESC, sensor reads, and a watchdog that stops the rover if the brain goes
   quiet. Board: Espressif ESP32-S3-DevKitC-1, WROOM-1 module, N8R8 (8MB
   flash, 8MB PSRAM). Onboard addressable RGB LED on GPIO38 (GPIO48 on some
-  board revisions).
+  board revisions). I2C sensors.
 - **Link**: USB, Pi ↔ devkit UART port (CP2102N → `/dev/ttyUSB0`, 115200
   8N1). This one cable carries power, the command protocol, and field
   reflashing, and stays in production. The plan is to later move the ESP
@@ -28,6 +28,8 @@ Two computers, one wire:
 
 - `esp/` — ESP-IDF project (firmware). C.
 - `rpi/` — Pi-side programs. C.
+- `protocol/` — the wire protocol spec (`protocol.md`, single source of
+  truth; firmware and Pi-side code follow it).
 
 ## Building
 
@@ -47,6 +49,13 @@ port free.
 ## Testing
 
 - `~/venvs/esp/bin/esptool`
+- `picocom -b 115200 --omap crlf --echo /dev/ttyUSB0` (alias talk) — talk to the body
+  by hand; exit with Ctrl-A then Ctrl-X. Both flags are required: without
+  `--omap crlf` Enter sends `\r` (which the firmware ignores — looks like
+  a hang), without `--echo` you can't see your own typing. `minicom` is
+  also installed. Either counts as the port's one reader.
+- `rpi/mike` reads protocol lines on stdin and prints the replies:
+  `printf 'ping\ntel\n' | ./mike` — good for scripted tests.
 
 ## Hardware notes
 
@@ -73,10 +82,13 @@ port free.
 ## Status / roadmap
 
 Done: full toolchain on the Pi, ESP-IDF cross-compile + flash loop proven,
-UART0 echo firmware and Pi-side first-contact program exchanging bytes.
+protocol v1 specced (`protocol/protocol.md`) and implemented — command
+dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel), throttle-lease
+watchdog, onboard LED via RMT, Pi-side line client.
 
-Next: design the command protocol (`protocol/`), command dispatch on the
-ESP, servo/ESC PWM out, watchdog. Then the brain: speech, vision, persona.
+Next: servo/ESC PWM out (LEDC), I2C sensors (INA219, LSM6DSOX) and real
+telemetry keys, OLED status display. Then the brain: speech, vision,
+persona.
 
 ## Parts
 

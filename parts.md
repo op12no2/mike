@@ -7,9 +7,20 @@
 - Active cooler - https://thepihut.com/products/active-cooler-for-raspberry-pi-5
 - ESP32 - https://thepihut.com/products/esp32-s3-devkitc-1-development-board?variant=42212853514435
 
-### IC2 sensors
+### I2C bus (STEMMA QT daisy-chain off the ESP32)
 
-- TBD
+- Power monitor - Adafruit INA219 breakout, 26V ±3.2A max, STEMMA QT (addr 0x40) - £9.60 - https://thepihut.com/products/adafruit-ina219-high-side-dc-current-sensor-breakout-26v-3-2a-max
+  - Battery voltage (LiPo low-voltage disarm) + electronics-rail current.
+    Wire high-side in the buck branch after the Y split — motor current
+    must NOT pass through it (±3.2A max).
+- IMU - Adafruit LSM6DSOX 6-DoF accel + gyro, STEMMA QT (addr 0x6A) - £11.40 - https://thepihut.com/products/adafruit-lsm6dsox-6-dof-accelerometer-and-gyroscope
+  - Tilt safety, and "commanded to move but nothing shaking" stall proxy.
+- Status display - Adafruit Monochrome 1.3" 128x64 OLED, SSD1306, STEMMA QT (addr 0x3C) - £19.20 - https://thepihut.com/products/adafruit-monochrome-1-3-128x64-oled-graphic-display-stemma-qt-qwiic
+- Cable, devkit header pins → first breakout - STEMMA QT to male jumper wires, 150mm - £1.00 - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-to-premium-male-headers-cable
+- Cable, breakout → breakout ×2 - STEMMA QT 100mm - £1.00 each - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-cable-100mm-long
+  - Lengths TBD once physical layout is known; 200/300/400mm variants exist.
+
+No address conflicts; all breakouts are 3.3V with onboard pull-ups.
 
 ### Mechanical
 
