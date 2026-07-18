@@ -4,7 +4,7 @@ Grumpy companion rover for Colin's grandchildren. Persona: Marvin-adjacent —
 reluctant, put-upon, secretly devoted. The goal is theatre, not utility: he
 detects the grandchildren, rolls up to them, and chats (locally-run speech,
 eventually). Slow and torquey, never fast. Reliability and simplicity are
-paramount; cost is not a constraint.
+paramount; cost is not a constraint. Beach-proof as far as possible.
 
 ## Architecture
 
@@ -28,9 +28,6 @@ Two computers, one wire:
 
 - `esp/` — ESP-IDF project (firmware). C.
 - `rpi/` — Pi-side programs. C.
-- `protocol/` — Pi↔ESP protocol spec: one .md + one shared .h (planned).
-- `docs/` — design notes and decisions.
-- `hw/` — wiring, parts, eventually a carrier PCB.
 
 ## Building
 
@@ -47,10 +44,9 @@ Pi side (from `rpi/`):
 program both want `/dev/ttyUSB0`. Never run both. Flashing also needs the
 port free.
 
-Python lives in `~/venvs/mike` (created with `--system-site-packages` for
-future picamera2). Invoke by full path (`~/venvs/mike/bin/python`) — venvs
-are never activated in this project. esptool for manual poking is there too;
-`idf.py flash` uses IDF's own pinned copy.
+## Testing
+
+- `~/venvs/esp/bin/esptool`
 
 ## Hardware notes
 
