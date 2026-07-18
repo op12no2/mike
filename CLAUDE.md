@@ -73,6 +73,7 @@ are never activated in this project. esptool for manual poking is there too;
   in doubt.
 - No colour in terminal output. Ever.
 
+
 ## Status / roadmap
 
 Done: full toolchain on the Pi, ESP-IDF cross-compile + flash loop proven,
@@ -80,3 +81,7 @@ UART0 echo firmware and Pi-side first-contact program exchanging bytes.
 
 Next: design the command protocol (`protocol/`), command dispatch on the
 ESP, servo/ESC PWM out, watchdog. Then the brain: speech, vision, persona.
+
+## Parts
+
+See `parts.md`.
