@@ -11,7 +11,7 @@ Conventions:
 - Name: `YYYY-MM-DD-short-desc.jpg`, so the listing sorts
   chronologically.
 - JPEG only — GitHub won't render HEIC.
-- Web size, not full-res: long edge ~1600 px. Git keeps every binary in
+- Web size, not full-res: long edge ~1000 px. Git keeps every binary in
   history forever; the originals stay in Lightroom.
 - Strip metadata on export — in Lightroom tick "Remove Location Info"
   (or set exported metadata to Copyright Only). Phone photos carry GPS
