@@ -1,24 +1,21 @@
 # Progress photos
 
-Curated build photos, in date order. Conventions:
+Curated build photos, in date order.
+
+Workflow: resize and export in Lightroom (Windows side), upload through
+the GitHub web UI. Nothing in this directory is ever created or edited
+on the Pi — the Pi clone just receives photos read-only via `git pull`.
+
+Conventions:
 
 - Name: `YYYY-MM-DD-short-desc.jpg`, so the listing sorts
   chronologically.
 - JPEG only — GitHub won't render HEIC.
-- Web size, not full-res: long edge ~1600 px, quality ~85. Originals
-  stay in the photo library; the repo gets copies. Git keeps every
-  binary in history forever, so full-res phone photos would bloat every
-  future clone.
-- Strip metadata before committing — phone photos carry EXIF including
-  the GPS coordinates of wherever they were taken, and this repo is
-  public.
-
-Import flow: copy exports in, then in this directory:
-
-    mogrify -resize '1600x1600>' -quality 85 -strip *.jpg
-
-`-strip` removes all EXIF including location; `'1600x1600>'` only ever
-shrinks. Needs `sudo apt install imagemagick` (not yet installed).
+- Web size, not full-res: long edge ~1600 px. Git keeps every binary in
+  history forever; the originals stay in Lightroom.
+- Strip metadata on export — in Lightroom tick "Remove Location Info"
+  (or set exported metadata to Copyright Only). Phone photos carry GPS
+  coordinates and this repo is public.
 
 A photo that illustrates a design decision gets linked from the relevant
 spec doc — e.g. the finished harness from `hardware.md`.

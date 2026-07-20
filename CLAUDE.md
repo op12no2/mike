@@ -34,8 +34,9 @@ Two computers, one wire:
   references.
 - `hardware.md` — the electrical design, single source of truth.
 - `parts.md` — the shopping list.
-- `photos/` — progress photos; conventions (naming, resize, EXIF
-  stripping) in `photos/README.md`.
+- `photos/` — progress photos; conventions in `photos/README.md`. They
+  are uploaded via the GitHub web UI, never from the Pi — so origin can
+  be ahead of the Pi clone: `git pull` before starting work.
 
 ## Building
 
