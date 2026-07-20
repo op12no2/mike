@@ -4,6 +4,49 @@ Single source of truth for the electrical design: how Mike is physically
 wired and why. What to buy is `parts.md`; session rules and the power-off
 ritual are in `CLAUDE.md`.
 
+## Schematic
+
+```mermaid
+flowchart LR
+  bat["LiPo 3S 11.1V 5000mAh (XT60)"]
+  y["Y split"]
+  loop["pull loop (XT60 link)"]
+  fuse["5A blade fuse"]
+  ina["INA219 power monitor (0x40)"]
+  buck["D36V50F5 buck (5V 5.5A)"]
+  pi["Raspberry Pi 5 — the brain"]
+  esp["ESP32-S3 DevKitC-1 — the body"]
+  led["WS2812 LED (GPIO38)"]
+  esc["QuicRun Fusion SE (motor + ESC + BEC)"]
+  servo["Savox servo (steering)"]
+  imu["LSM6DSOX IMU (0x6A)"]
+  oled["SSD1306 OLED (0x3C)"]
+
+  bat ==>|"14 AWG"| y
+  y ==>|"14 AWG"| loop
+  loop ==> esc
+  y ==>|"16 AWG"| fuse
+  fuse ==> ina
+  ina ==> buck
+  buck ==>|"5V"| pi
+  pi ==>|"USB 5V"| esp
+  esc ==>|"BEC 6V"| servo
+  pi <-->|"UART 115200 8N1, protocol.md"| esp
+  esp -->|"PWM 50Hz"| servo
+  esp -->|"PWM 50Hz throttle"| esc
+  esp -.-> ina
+  esp -.-> imu
+  esp -.-> oled
+  esp --> led
+```
+
+Thick edges are power, labelled with wire gauge where it matters; thin
+solid edges are signals; dotted edges are the I2C bus (drawn as a star,
+physically a STEMMA QT daisy chain whose order is TBD at layout). The
+two Pi↔ESP edges — USB power and UART — are one physical cable. The
+INA219 appears twice deliberately: it sits in series in the electronics
+power branch and is read over I2C.
+
 ## Power
 
 Topology: battery (Gens Ace 3S 11.1V 5000mAh, XT60) → trunk → Y split,
