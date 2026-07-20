@@ -30,6 +30,8 @@ Two computers, one wire:
 - `rpi/` — Pi-side programs. C.
 - `protocol.md` — the wire protocol spec, single source of truth; firmware
   and Pi-side code follow it.
+- `software.md` — the software design: shape, toolchains, driver
+  references.
 - `hardware.md` — the electrical design, single source of truth.
 - `parts.md` — the shopping list.
 
