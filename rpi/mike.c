@@ -1,4 +1,4 @@
-/* mike - rpi side: line client for the body protocol (protocol/protocol.md).
+/* mike - rpi side: line client for the body protocol (protocol.md).
    Reads protocol lines on stdin, prints the body's replies on stdout. */
 
 #include <stdio.h>

@@ -28,8 +28,10 @@ Two computers, one wire:
 
 - `esp/` — ESP-IDF project (firmware). C.
 - `rpi/` — Pi-side programs. C.
-- `protocol/` — the wire protocol spec (`protocol.md`, single source of
-  truth; firmware and Pi-side code follow it).
+- `protocol.md` — the wire protocol spec, single source of truth; firmware
+  and Pi-side code follow it.
+- `hardware.md` — the electrical design, single source of truth.
+- `parts.md` — the shopping list.
 
 ## Building
 
@@ -102,14 +104,10 @@ ritual:
 ## Status / roadmap
 
 Done: full toolchain on the Pi, ESP-IDF cross-compile + flash loop proven,
-protocol v1 specced (`protocol/protocol.md`) and implemented — command
+protocol v1 specced (`protocol.md`) and implemented — command
 dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel), throttle-lease
 watchdog, onboard LED via RMT, Pi-side line client.
 
 Next: servo/ESC PWM out (LEDC), I2C sensors (INA219, LSM6DSOX) and real
 telemetry keys, OLED status display. Then the brain: speech, vision,
 persona.
-
-## Parts
-
-See `parts.md` (what to buy) and `hardware.md` (how it's wired, and why).

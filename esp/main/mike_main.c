@@ -1,4 +1,4 @@
-/* mike - esp32 side: the body. Line protocol on UART0, see protocol/protocol.md. */
+/* mike - esp32 side: the body. Line protocol on UART0, see protocol.md. */
 
 #include <stdio.h>
 #include <string.h>
