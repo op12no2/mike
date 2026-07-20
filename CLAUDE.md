@@ -49,7 +49,7 @@ port free.
 ## Testing
 
 - `~/venvs/esp/bin/esptool`
-- `picocom -b 115200 --omap crlf --echo /dev/ttyUSB0` (alias talk) — talk to the body
+- `picocom -b 115200 --omap crlf --echo /dev/ttyUSB0` (alias `talk`) — talk to the body
   by hand; exit with Ctrl-A then Ctrl-X. Both flags are required: without
   `--omap crlf` Enter sends `\r` (which the firmware ignores — looks like
   a hang), without `--echo` you can't see your own typing. `minicom` is
@@ -60,13 +60,33 @@ port free.
 ## Hardware notes
 
 - Chassis: Axial SCX10 III Base Camp 1/10 crawler kit (4WD, builder's kit).
-- Power: battery → Pololu D36V50F5 5V/5.5A buck → Pi 5; ESP powered from the
-  Pi's USB. Motor power via ESC on its own rail. Common ground everywhere;
-  motor current never through USB ground.
+- Power in one line: battery → Y split → [pull loop → Fusion SE ESC] and
+  [fuse → INA219 → buck → Pi 5 → USB → ESP32].
+- The electrical design (topology, gauges, pull loop, fuse, grounding,
+  I2C map) lives in `hardware.md` — single source of truth; consult it
+  before touching wiring.
 - One power source at a time on the devkit: USB only — never feed the 5V pin
   simultaneously.
 - `/boot/firmware/config.txt` has `usb_max_current_enable=1` (no USB-PD
   negotiation from the buck).
+
+## Session end ("off")
+
+There is no power switch — deliberate decision, don't relitigate. A switch
+in the main line would need ~50A rating and corrodes in salt air, and it
+solves neither real problem: the Pi needs a *clean* shutdown (software),
+and the LiPo must be physically unplugged after every session regardless
+(standby drain through buck/ESC will over-discharge and kill it). The
+ritual:
+
+1. Kid pulls the XT60 loop (ESC branch) — motion dead by physics; Mike
+   stays up and grumbles about it.
+2. Kid says goodnight — clean poweroff with a farewell line. Until speech
+   exists: a protocol command or the Pi 5 power button. A chunky external
+   momentary button on the shell, wired to the Pi 5's power-button pads,
+   is the interim and permanent fallback (parts TBD at shell layout).
+3. Adult unplugs the battery. LiPo discipline: charge in a LiPo bag,
+   storage-charge if idle more than a few days, never store connected.
 
 ## Doctrine
 
@@ -92,4 +112,4 @@ persona.
 
 ## Parts
 
-See `parts.md`.
+See `parts.md` (what to buy) and `hardware.md` (how it's wired, and why).
