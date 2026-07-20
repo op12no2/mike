@@ -100,16 +100,23 @@ ritual:
   load-bearing culture (Colossal Cave; the human is `xyzzy`), not a TODO.
 - Failures should degrade toward stillness: watchdog stops the motors when
   in doubt.
+- Design decisions land in the spec files — `protocol.md`, `hardware.md`,
+  `software.md` — in the same commit as the change they describe.
+  CLAUDE.md stays a summary with pointers; `parts.md` stays a shopping
+  list.
 - No colour in terminal output. Ever.
 
 
 ## Status / roadmap
 
-Done: full toolchain on the Pi, ESP-IDF cross-compile + flash loop proven,
-protocol v1 specced (`protocol.md`) and implemented — command
-dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel), throttle-lease
-watchdog, onboard LED via RMT, Pi-side line client.
+State as of 2026-07-20. Physical: chassis kit assembled; no electronics
+mounted yet; power-harness parts (XT60s, fuse holder, wire, heat shrink)
+on order. Software: full toolchain on the Pi, ESP-IDF cross-compile +
+flash loop proven, protocol v1 specced (`protocol.md`) and implemented —
+command dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel),
+throttle-lease watchdog, onboard LED via RMT, Pi-side line client.
 
-Next: servo/ESC PWM out (LEDC), I2C sensors (INA219, LSM6DSOX) and real
-telemetry keys, OLED status display. Then the brain: speech, vision,
-persona.
+Next on the bench: build the power harness when parts arrive (see
+`hardware.md`), mount the electronics. Next in firmware: servo/ESC PWM
+out (LEDC), I2C sensors (INA219, LSM6DSOX) and real telemetry keys, OLED
+status display. Then the brain: speech, vision, persona.
