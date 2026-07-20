@@ -21,5 +21,18 @@ and complains about it.
 - [parts.md](parts.md) — the shopping list.
 - [CLAUDE.md](CLAUDE.md) — working notes, doctrine, current status.
 
+## Credits
+
+Mike is a collaboration. I bring the grandchildren, the soldering iron,
+and final say; after fifty years of writing code the novelty has worn
+off — the results are what matter. Claude (Anthropic) is Mike's engineer
+and coder: the electrical design, the firmware, the protocol, and most
+of these documents came out of conversations argued to a conclusion and
+then committed together — the co-author lines in the git history are
+real. Fittingly, Claude Code runs on the Pi 5 that will be Mike's brain,
+so the engineer works from inside the head it is building.
+
+The spelling in `photos/` is mine alone, kept as a memento.
+
 Everything is plain C, flat files, and Makefiles. Unknown serial commands
 are answered with `Nothing happens.`
