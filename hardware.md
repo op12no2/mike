@@ -7,7 +7,7 @@ ritual are in `CLAUDE.md`.
 ## Schematic
 
 ```mermaid
-flowchart LR
+flowchart TD
   bat["LiPo 3S 11.1V 5000mAh (XT60)"]
   y["Y split"]
   loop["pull loop (XT60 link)"]
