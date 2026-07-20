@@ -34,6 +34,8 @@ Two computers, one wire:
   references.
 - `hardware.md` — the electrical design, single source of truth.
 - `parts.md` — the shopping list.
+- `photos/` — progress photos; conventions (naming, resize, EXIF
+  stripping) in `photos/README.md`.
 
 ## Building
 
