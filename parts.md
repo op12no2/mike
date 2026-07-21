@@ -38,3 +38,4 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
+- Running total: ~£1057 (2026-07-21).

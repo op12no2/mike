@@ -117,8 +117,8 @@ ritual:
 State as of 2026-07-21. Physical: rolling chassis — wheels on, motor and
 steering servo mounted (steering linkage adjusted to clear a bind at one
 end of travel; firmware endpoint calibration must respect the mechanical
-limits). Power-harness parts on order; junction materials and ESC
-program card to order (parts.md). Pi/ESP/buck not yet mounted. Software:
+limits). Battery and power-harness parts on order; junction materials
+and ESC program card to order (parts.md). Pi/ESP/buck not yet mounted. Software:
 full toolchain on the Pi, ESP-IDF cross-compile +
 flash loop proven, protocol v1 specced (`protocol.md`) and implemented —
 command dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel),
