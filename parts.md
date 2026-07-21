@@ -31,7 +31,7 @@ What to buy and where from. How it's wired is `hardware.md`.
 ### Mechanical
 
 - Chassis - Axial 1/10 SCX10 III Base Camp 4WD Rock Crawler Builders Kit - https://www.modelsport.co.uk/product/1351743
-- Servo - Savox Waterproof Coreless Steel Gear Digital Servo 32kg PLUS - https://www.modelsport.co.uk/product/savox-waterproof-coreless-steel-gear-digital-servo-32kg-plus-1348759
+- Servo - Savox SW-1210SG+ Waterproof Coreless Steel Gear Digital Servo 32kg PLUS - https://www.modelsport.co.uk/product/savox-waterproof-coreless-steel-gear-digital-servo-32kg-plus-1348759
 - Motor/ESC - Hobbywing Quicrun Fusion SE for Crawler 1200kv 540 Spec - https://www.modelsport.co.uk/product/hobbywing-quicrun-fusion-se-for-crawler-1200kv-540-spec-1347890
 
 ### Notes

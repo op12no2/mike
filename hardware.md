@@ -91,8 +91,9 @@ is unfused, RC-style — its wire is sized for the load.
 
 The servo is NOT on battery power: it runs from the Fusion SE's BEC.
 Ratings (verified 2026-07-21): BEC 6V or 7.4V (set via the program box —
-use 6V) at 4A continuous, 6A peak; Savox SW-1210SG stall 6A at 6V, 7.4A
-at 7.4V; torque 20kg·cm at 6V, 32 at 7.4V. At 6V, hard stall sits at the
+use 6V) at 4A continuous, 6A peak; Savox SW-1210SG+ stall 6A at 6V,
+7.4A at 7.4V; torque 20kg·cm at 6V, 32 at 7.4V (the + variant's
+soft-start and Sanwa SSR support change none of these numbers). At 6V, hard stall sits at the
 BEC's peak rating and normal steering far below — adequate, and 20kg·cm
 is ample. 7.4V would buy torque we don't need at a stall the BEC can't
 cover.
@@ -122,7 +123,7 @@ flowchart TD
     er["red — BEC 6V out"]
     eb["black — ground"]
   end
-  subgraph servo["Savox SW-1210SG lead (female plug)"]
+  subgraph servo["Savox SW-1210SG+ lead (female plug)"]
     sy["yellow — steering signal in"]
     sr["red — 6V in"]
     sb["brown — ground"]
