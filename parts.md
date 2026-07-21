@@ -29,7 +29,7 @@ What to buy and where from. How it's wired is `hardware.md`.
   Program Card (30501003) — sets ESC LiPo cutoff, drag brake, BEC
   voltage; perfboard and 2.54mm male pin headers for the junction (see
   hardware.md).
-- To order: thin signal wire (24–26 AWG), junction to ESP.
+- To order: thin signal wire (22–26 AWG, stranded), junction to ESP.
 
 ### Mechanical
 
