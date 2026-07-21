@@ -91,9 +91,11 @@ is unfused, RC-style — its wire is sized for the load.
 
 The servo is NOT on battery power: it runs from the Fusion SE's BEC.
 Ratings (verified 2026-07-21): BEC 6V or 7.4V (set via the program box —
-use 6V) at 4A continuous, 6A peak; Savox SW-1210SG+ stall 6A at 6V. Hard
-stall sits at the BEC's peak rating, normal steering far below —
-adequate for brief crawler steering stalls.
+use 6V) at 4A continuous, 6A peak; Savox SW-1210SG stall 6A at 6V, 7.4A
+at 7.4V; torque 20kg·cm at 6V, 32 at 7.4V. At 6V, hard stall sits at the
+BEC's peak rating and normal steering far below — adequate, and 20kg·cm
+is ample. 7.4V would buy torque we don't need at a stall the BEC can't
+cover.
 
 In a stock RC car both 3-wire leads plug into the receiver, which is
 secretly a power/signal bus: grounds joined, centre (+) pins joined,
@@ -107,9 +109,46 @@ plays the part — two 3-pin 0.1" male headers, RC pinout (signal / + / −,
 - All + (centre) pins bused: the 6V rail. The ESC's BEC feeds it, the
   servo draws from it. It never touches an ESP pin — the ESP32 is 3.3V
   logic.
-- Signal pins wired individually to ESP GPIOs (pins chosen with the LEDC
-  firmware). ESP 3.3V PWM is read fine by modern ESCs and digital
-  servos; a level shifter is the (unlikely) fallback.
+- Signal pins wired individually to ESP GPIOs — GPIO4 steering, GPIO5
+  throttle (see pin map below). ESP 3.3V PWM is read fine by modern ESCs
+  and digital servos; a level shifter is the (unlikely) fallback.
+
+Wire by wire (red is the centre pin on both leads):
+
+```mermaid
+flowchart TD
+  subgraph esc["Fusion SE receiver lead (female plug)"]
+    ew["white — throttle signal in"]
+    er["red — BEC 6V out"]
+    eb["black — ground"]
+  end
+  subgraph servo["Savox SW-1210SG lead (female plug)"]
+    sy["yellow — steering signal in"]
+    sr["red — 6V in"]
+    sb["brown — ground"]
+  end
+  subgraph jct["perfboard junction — two 3-pin male headers"]
+    rail["6V rail — centre pins bused"]
+    gnd["ground bus"]
+  end
+  subgraph dev["ESP32-S3 DevKitC-1"]
+    g4["GPIO4 — steering PWM"]
+    g5["GPIO5 — throttle PWM"]
+    gp["GND pin"]
+  end
+
+  er ==> rail
+  rail ==> sr
+  eb --- gnd
+  sb --- gnd
+  gnd --- gp
+  g4 --> sy
+  g5 --> ew
+```
+
+Both female plugs push straight onto the junction's male headers; every
+wire lands there. The two signal pins pass through the junction to the
+ESP GPIOs — nothing else reaches the ESP.
 
 Escape hatch: if the BEC ever proves inadequate, pull the ESC centre pin
 from the junction and feed the rail from a standalone 6V UBEC — nothing
@@ -131,3 +170,17 @@ pull-ups; no address conflicts.
 - `0x6A` — LSM6DSOX IMU. Tilt safety, and "commanded to move but nothing
   shaking" stall proxy.
 - `0x3C` — SSD1306 128x64 OLED status display.
+
+## ESP32-S3 pin map
+
+| GPIO | use |
+|---|---|
+| 4 | steering servo PWM (LEDC, 50 Hz) |
+| 5 | throttle PWM to Fusion SE (LEDC, 50 Hz) |
+| 8 | I2C SDA (STEMMA QT daisy chain) — planned |
+| 9 | I2C SCL (STEMMA QT daisy chain) — planned |
+| 38 | onboard WS2812 LED (GPIO48 on some board revisions) |
+
+Keep clear: GPIO26–37 (flash and PSRAM on the WROOM-1 N8R8 module),
+strapping pins 0, 3, 45, 46; GPIO19/20 are the native USB port (the
+future console channel).
