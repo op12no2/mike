@@ -87,13 +87,37 @@ electronics branch. Protects that wire from a chafe-through short; normal
 draw is ≤ ~2.5A at 11.1V, so it never blows in service. The motor branch
 is unfused, RC-style — its wire is sized for the load.
 
-### Servo power
+### Servo power and the junction
 
-The servo is NOT on battery power: it runs from the Fusion SE's BEC via
-the receiver-style lead. Verify the BEC rating against the Savox stall
-draw (3–5A for big steel-gear servos); fit a standalone 6V BEC if
-marginal. From the ESC lead only signal and ground go to the ESP32 — BEC
-+6V never touches an ESP pin.
+The servo is NOT on battery power: it runs from the Fusion SE's BEC.
+Ratings (verified 2026-07-21): BEC 6V or 7.4V (set via the program box —
+use 6V) at 4A continuous, 6A peak; Savox SW-1210SG+ stall 6A at 6V. Hard
+stall sits at the BEC's peak rating, normal steering far below —
+adequate for brief crawler steering stalls.
+
+In a stock RC car both 3-wire leads plug into the receiver, which is
+secretly a power/signal bus: grounds joined, centre (+) pins joined,
+signal pins individual. Mike has no receiver, so a perfboard junction
+plays the part — two 3-pin 0.1" male headers, RC pinout (signal / + / −,
++ in the middle so a reversed plug swaps ground and signal, never puts
+6V on a signal):
+
+- All − pins bused, plus one wire to ESP ground. Signal reference only —
+  motor current returns via the fat XT60 path, never this wire.
+- All + (centre) pins bused: the 6V rail. The ESC's BEC feeds it, the
+  servo draws from it. It never touches an ESP pin — the ESP32 is 3.3V
+  logic.
+- Signal pins wired individually to ESP GPIOs (pins chosen with the LEDC
+  firmware). ESP 3.3V PWM is read fine by modern ESCs and digital
+  servos; a level shifter is the (unlikely) fallback.
+
+Escape hatch: if the BEC ever proves inadequate, pull the ESC centre pin
+from the junction and feed the rail from a standalone 6V UBEC — nothing
+else changes.
+
+The Fusion SE's 5-wire PRG lead is the port for Hobbywing's LED program
+box: bench-only configuration (LiPo cutoff — set it, it backs up the
+INA219 disarm; drag brake; run mode; BEC voltage). Not runtime wiring.
 
 ## I2C bus
 
