@@ -118,6 +118,11 @@ Wire by wire (red is the centre pin on both leads):
 
 ```mermaid
 flowchart TD
+  subgraph dev["ESP32-S3 DevKitC-1"]
+    g4["GPIO4 — steering PWM"]
+    g5["GPIO5 — throttle PWM"]
+    gp["GND pin"]
+  end
   subgraph esc["Fusion SE receiver lead (female plug)"]
     ew["white — throttle signal in"]
     er["red — BEC 6V out"]
@@ -132,24 +137,21 @@ flowchart TD
     rail["6V rail — centre pins bused"]
     gnd["ground bus"]
   end
-  subgraph dev["ESP32-S3 DevKitC-1"]
-    g4["GPIO4 — steering PWM"]
-    g5["GPIO5 — throttle PWM"]
-    gp["GND pin"]
-  end
 
-  er ==> rail
-  rail ==> sr
-  eb --- gnd
-  sb --- gnd
-  gnd --- gp
   g4 --> sy
   g5 --> ew
+  gp --- gnd
+  er ==> rail
+  sr === rail
+  eb --- gnd
+  sb --- gnd
 ```
 
-Both female plugs push straight onto the junction's male headers; every
-wire lands there. The two signal pins pass through the junction to the
-ESP GPIOs — nothing else reaches the ESP.
+Thick edges are the 6V path — the BEC feeds the rail, the servo draws
+from it; plain edges are ground; arrows are the two PWM signals. Both
+female plugs push straight onto the junction's male headers; every wire
+lands there. The two signal pins pass through the junction to the ESP
+GPIOs — nothing else reaches the ESP.
 
 Escape hatch: if the BEC ever proves inadequate, pull the ESC centre pin
 from the junction and feed the rail from a standalone 6V UBEC — nothing
