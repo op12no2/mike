@@ -23,6 +23,10 @@ What to buy and where from. How it's wired is `hardware.md`.
 - Regulator - Pololu 5V 5.5A Step-Down Voltage Regulator (D36V50F5) - https://thepihut.com/products/pololu-5v-5-5a-step-down-voltage-regulator-d36v50f5?variant=43704379015363
 - On order: Amass XT60 pairs, inline mini blade fuse holder + 5A fuses,
   14 and 16 AWG silicone wire, adhesive-lined heat shrink.
+- To order: Hobbywing LED Program Card (30501003) — sets ESC LiPo
+  cutoff, drag brake, BEC voltage; perfboard scrap and 2.54mm male pin
+  headers for the junction (see hardware.md); thin signal wire
+  (24–26 AWG), junction to ESP.
 
 ### Mechanical
 
