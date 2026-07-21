@@ -34,9 +34,11 @@ Two computers, one wire:
   references.
 - `hardware.md` — the electrical design, single source of truth.
 - `parts.md` — the shopping list.
-- `photos/` — progress photos; conventions in `photos/README.md`. They
-  are uploaded via the GitHub web UI, never from the Pi — so origin can
-  be ahead of the Pi clone: `git pull` before starting work.
+- Progress photos live in a Google Photos album (linked from the
+  README), not in the repo — binaries sit in git history forever, an
+  album viewer suits the audience better. Origin can still be ahead of
+  the Pi clone (occasional web-UI edits): `git pull` before starting
+  work.
 
 ## Building
 
