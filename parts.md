@@ -36,6 +36,5 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 ### Notes
 
-- May need different servo pinion.
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
