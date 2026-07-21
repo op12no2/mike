@@ -20,6 +20,9 @@ What to buy and where from. How it's wired is `hardware.md`.
 ### Power
 
 - Battery - Gens Ace LiPo Car GTech 3S 11.1V 5000mAh 60C - https://www.modelsport.co.uk/product/gens-ace-lipo-car-gtech-3s-111v-5000mah-60c-with-xt60-short-1361659
+- Charger - Gens Ace Imars S100 (auto-recognises GTech packs; has the
+  storage mode the session-end ritual relies on) - in hand
+- LiPo charging bag - in hand
 - Regulator - Pololu 5V 5.5A Step-Down Voltage Regulator (D36V50F5) - https://thepihut.com/products/pololu-5v-5-5a-step-down-voltage-regulator-d36v50f5?variant=43704379015363
 - On order: Amass XT60 pairs, inline mini blade fuse holder + 5A fuses,
   14 and 16 AWG silicone wire, adhesive-lined heat shrink.
