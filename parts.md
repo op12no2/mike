@@ -23,6 +23,10 @@ What to buy and where from. How it's wired is `hardware.md`.
 - Speaker - 3" 4Ω 3W bare cone - £2.90 - https://thepihut.com/products/speaker-3-diameter-4-ohm-3-watt
   - Bench/first-shell part; weather-resistant replacement TBD at shell
     layout (see hardware.md, Audio).
+- Mic - Mini USB Microphone - £5.20 - https://thepihut.com/products/mini-usb-microphone
+  - Bench part for the listening loop; short range (arm's length). If
+    field range disappoints, upgrade class is a small USB conference
+    mic (~£30–60). Needs a foam windscreen outdoors either way.
 
 ### Power
 
@@ -48,4 +52,4 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
-- Running total: ~£1066 (2026-07-22).
+- Running total: ~£1071 (2026-07-22).

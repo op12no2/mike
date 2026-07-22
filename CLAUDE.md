@@ -4,7 +4,9 @@ Grumpy companion rover for Colin's grandchildren. Persona: Marvin-adjacent —
 reluctant, put-upon, secretly devoted. The goal is theatre, not utility: he
 detects the grandchildren, rolls up to them, and chats (locally-run speech,
 eventually). Slow and torquey, never fast. Reliability and simplicity are
-paramount; cost is not a constraint. Beach-proof as far as possible.
+paramount; cost is not a constraint. Typical outing is the garden or
+park on a dry day; the beach is a nice-to-have — weather-proof where
+cheap, don't gate decisions on it.
 
 ## Architecture
 
