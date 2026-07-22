@@ -17,6 +17,13 @@ What to buy and where from. How it's wired is `hardware.md`.
 - Cable, breakout → breakout ×2 - STEMMA QT 100mm - £1.00 each - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-cable-100mm-long
   - Lengths TBD once physical layout is known; 200/300/400mm variants exist.
 
+### Audio
+
+- Amp - Adafruit I2S 3W Class D Amplifier Breakout MAX98357A - £5.70 - https://thepihut.com/products/adafruit-i2s-3w-class-d-amplifier-breakout-max98357a
+- Speaker - 3" 4Ω 3W bare cone - £2.90 - https://thepihut.com/products/speaker-3-diameter-4-ohm-3-watt
+  - Bench/first-shell part; weather-resistant replacement TBD at shell
+    layout (see hardware.md, Audio).
+
 ### Power
 
 - Battery - Gens Ace LiPo Car GTech 3S 11.1V 5000mAh 60C - https://www.modelsport.co.uk/product/gens-ace-lipo-car-gtech-3s-111v-5000mah-60c-with-xt60-short-1361659
@@ -41,4 +48,4 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
-- Running total: ~£1057 (2026-07-21).
+- Running total: ~£1066 (2026-07-22).

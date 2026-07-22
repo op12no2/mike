@@ -21,6 +21,8 @@ flowchart TD
   servo["Savox servo (steering)"]
   imu["LSM6DSOX IMU (0x6A)"]
   oled["SSD1306 OLED (0x3C)"]
+  amp["MAX98357A I2S amp"]
+  spk["speaker 4Ω 3W"]
 
   bat ==>|"14 AWG"| y
   y ==>|"14 AWG"| loop
@@ -38,6 +40,9 @@ flowchart TD
   esp -.-> imu
   esp -.-> oled
   esp --> led
+  pi ==>|"5V header"| amp
+  pi -->|"I2S"| amp
+  amp ==> spk
 ```
 
 Thick edges are power, labelled with wire gauge where it matters; thin
@@ -160,6 +165,26 @@ else changes.
 The Fusion SE's 5-wire PRG lead is the port for Hobbywing's LED program
 box: bench-only configuration (LiPo cutoff — set it, it backs up the
 INA219 disarm; drag brake; run mode; BEC voltage). Not runtime wiring.
+
+## Audio
+
+Voice out. Lives on the Pi — speech is persona, and the persona is the
+brain's job (`CLAUDE.md`); the ESP32 never touches audio.
+
+- Adafruit MAX98357A I2S mono amp breakout on the Pi's header: BCLK →
+  GPIO18, LRCLK → GPIO19, DIN → GPIO21, power from the header's 5V and
+  GND pins. `dtoverlay=max98357a` in `/boot/firmware/config.txt`
+  presents it as a normal ALSA device — the voice software plays to the
+  ALSA default and never knows what the hardware is.
+- Those are the Pi's dedicated I2S pins; every sensor hangs off the ESP,
+  so the Pi header is otherwise free.
+- Speaker: 4Ω 3W bare cone on the breakout's screw terminal. Peak into
+  4Ω at 5V is ~3.2W — under 0.8A from the 5V rail, brief and rare
+  (speech duty is low), inside the buck's headroom. The 3" cone is a
+  bench/first-shell part; swap for a weather-resistant (mylar cone)
+  speaker at shell layout if the beach demands it.
+- Mono, deliberately: one rover, one voice. The breakout's default
+  (L+R)/2 downmix is fine.
 
 ## I2C bus
 
