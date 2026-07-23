@@ -52,6 +52,9 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
+- TBD at shell layout: potentiometer for the spontaneous-chatter rate
+  (software.md, Voice) — the housing gets embossed lettering: GRUMPINESS.
+  This label is canon.
 - In hand: Bambu Lab P2S + AMS Pro 3D printer — shell, electronics
   tray, speaker grille, mic port, knob/button housings are printable
   at shell layout.
