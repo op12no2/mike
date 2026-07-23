@@ -10,23 +10,23 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 ### I2C breakouts (STEMMA QT)
 
-- Power monitor - Adafruit INA219 breakout, 26V ±3.2A max, STEMMA QT - £9.60 - https://thepihut.com/products/adafruit-ina219-high-side-dc-current-sensor-breakout-26v-3-2a-max
-- IMU - Adafruit LSM6DSOX 6-DoF accel + gyro, STEMMA QT - £11.40 - https://thepihut.com/products/adafruit-lsm6dsox-6-dof-accelerometer-and-gyroscope
-- Status display - Adafruit Monochrome 1.3" 128x64 OLED, SSD1306, STEMMA QT - £19.20 - https://thepihut.com/products/adafruit-monochrome-1-3-128x64-oled-graphic-display-stemma-qt-qwiic
-- Cable, devkit header pins → first breakout - STEMMA QT to male jumper wires, 150mm - £1.00 - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-to-premium-male-headers-cable
-- Cable, breakout → breakout ×2 - STEMMA QT 100mm - £1.00 each - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-cable-100mm-long
+- Power monitor - Adafruit INA219 breakout, 26V ±3.2A max, STEMMA QT - https://thepihut.com/products/adafruit-ina219-high-side-dc-current-sensor-breakout-26v-3-2a-max
+- IMU - Adafruit LSM6DSOX 6-DoF accel + gyro, STEMMA QT - https://thepihut.com/products/adafruit-lsm6dsox-6-dof-accelerometer-and-gyroscope
+- Status display - Adafruit Monochrome 1.3" 128x64 OLED, SSD1306, STEMMA QT - https://thepihut.com/products/adafruit-monochrome-1-3-128x64-oled-graphic-display-stemma-qt-qwiic
+- Cable, devkit header pins → first breakout - STEMMA QT to male jumper wires, 150mm - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-to-premium-male-headers-cable
+- Cable, breakout → breakout ×2 - STEMMA QT 100mm - https://thepihut.com/products/stemma-qt-qwiic-jst-sh-4-pin-cable-100mm-long
   - Lengths TBD once physical layout is known; 200/300/400mm variants exist.
 
 ### Audio
 
-- Amp - Adafruit I2S 3W Class D Amplifier Breakout MAX98357A - £5.70 - https://thepihut.com/products/adafruit-i2s-3w-class-d-amplifier-breakout-max98357a
-- Speaker - 3" 4Ω 3W bare cone - £2.90 - https://thepihut.com/products/speaker-3-diameter-4-ohm-3-watt
+- Amp - Adafruit I2S 3W Class D Amplifier Breakout MAX98357A - https://thepihut.com/products/adafruit-i2s-3w-class-d-amplifier-breakout-max98357a
+- Speaker - 3" 4Ω 3W bare cone - https://thepihut.com/products/speaker-3-diameter-4-ohm-3-watt
   - Bench/first-shell part; weather-resistant replacement TBD at shell
     layout (see hardware.md, Audio).
-- Mic - Mini USB Microphone - £5.20 - https://thepihut.com/products/mini-usb-microphone
+- Mic - Mini USB Microphone - https://thepihut.com/products/mini-usb-microphone
   - Bench part for the listening loop; short range (arm's length). If
     field range disappoints, upgrade class is a small USB conference
-    mic (~£30–60). Needs a foam windscreen outdoors either way.
+    mic. Needs a foam windscreen outdoors either way.
 
 ### Power
 
@@ -55,4 +55,3 @@ What to buy and where from. How it's wired is `hardware.md`.
 - In hand: Bambu Lab P2S + AMS Pro 3D printer — shell, electronics
   tray, speaker grille, mic port, knob/button housings are printable
   at shell layout.
-- Running total: ~£1071 (2026-07-22).
