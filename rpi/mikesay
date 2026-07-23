@@ -8,7 +8,7 @@
 
 PIPER="$HOME/venvs/piper/bin/piper"
 MODEL="$HOME/piper-voices/en_GB-alan-medium.onnx"
-PACE=0.67   # length-scale: smaller is faster; 0.67 ~= 1.5x speed
+PACE=0.75   # length-scale: smaller is faster; 0.67 ~= 1.5x speed
 
 [ -n "$1" ] || { echo "usage: mikesay \"text\" [out.wav]" >&2; exit 2; }
 

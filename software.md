@@ -49,6 +49,10 @@ libc. One program so far:
   timeout, and a 2 s settle plus input flush at open to absorb the
   auto-reset boot chatter.
 
+- `voice` — the double-act performer: scans `bits/`, fires bits on
+  stdin events, self-schedules idle grumbles on a mood clock. Details
+  in the Voice section below.
+
 Future brain programs (persona daemon, speech, vision) are all Pi-side
 and speak the same protocol. The one-reader rule means there will be a
 single port-owning process the rest talk to, never multiple openers.
@@ -138,14 +142,36 @@ every two minutes is a toy with no off switch.
   telemetry key — scales the spontaneous rate only. Facts bypass the
   knob. (Pot goes on the parts list when the knob is specced.)
 
+### The voice program
+
+`rpi/voice` (plain C, `make voice`). Scans `bits/` plus one level of
+subdirectories at start; then:
+
+- stdin is the event feed. A bare trigger name per line fires that
+  trigger — the rehearsal seam (`printf 'goodnight\n' | ./voice -n`).
+  An `ok k=v …` telemetry line derives triggers: `jolt` on a
+  `moving` 0→1 edge with `thr=0`; battery triggers arm the moment
+  `vbat_mv` exists in `tel`.
+- `boot` fires at startup. `idle` bits self-schedule roughly every
+  15 minutes, scaled by the mood clock (two slow sines, random phases
+  each run) — silence stays the default.
+- One eligible bit per firing, chosen at random among those off
+  cooldown. Pool bits deal lines from a shuffle bag; `{a|b|c}` slots
+  won't repeat their previous pick.
+- Lines are spoken by exec'ing `mikesay` / `bodysay`, so the say
+  scripts remain the single tuning point for pace and pitch. `-n`
+  prints the performance without audio.
+- Deferred deliberately: the grumpiness knob (needs the pot on an ESP
+  ADC), escalation flags on repeated BODY lines, bags persisting
+  across runs.
+
 ### Testing seam
 
 `mikesay` / `bodysay` speak one line each from the command line — they
-prove the audio chain the day the amp arrives. The voice program itself
-reads protocol events on stdin (same pattern as `mike`), so whole
-scenes rehearse by piping synthetic telemetry — no rover, no port.
-Port discipline is unchanged: one reader; picocom stays the ESP-poking
-tool.
+prove the audio chain the day the amp arrives. `voice -n` rehearses
+whole scenes from piped trigger names or synthetic telemetry — no
+rover, no port, no speaker. Port discipline is unchanged: one reader;
+picocom stays the ESP-poking tool.
 
 ## Toolchains
 

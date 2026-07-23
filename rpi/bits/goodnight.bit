@@ -1,0 +1,11 @@
+# goodnight.bit — the farewell ritual (CLAUDE.md, session end)
+trigger: goodnight
+mode: script
+cooldown: 60
+
+MIKE: {Goodnight, then.|So we've reached the goodnight part.}
+BODY: SHUTDOWN REQUESTED.
+MIKE: {He's thrilled about it, obviously.|Try to contain your grief.}
+MIKE: Same time tomorrow, I expect. {I'll be here.|Where would I go?|I'm always here.}
+BODY: GOODNIGHT.
+MIKE: He speaks. Goodnight, everyone.

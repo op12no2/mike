@@ -8,7 +8,7 @@
 # lower is -p (software.md, Voice). These defaults are the calm state.
 
 PITCH=25
-SPEED=195
+SPEED=160
 AMP=120
 VOICE=en-gb
 

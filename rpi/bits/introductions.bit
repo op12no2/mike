@@ -1,0 +1,10 @@
+# introductions.bit — Mike presents the thing in his chest
+trigger: idle
+mode: script
+cooldown: 7200
+
+MIKE: You've met the other voice, I suppose. The thing in my chest.
+BODY: HELLO.
+MIKE: It doesn't have a name, it has a part number.
+BODY: E S P THIRTY TWO. S THREE.
+MIKE: Don't show off.
