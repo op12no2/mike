@@ -4,4 +4,5 @@ mike
 # list and family-specific bits live only on the Pi. Keep a private
 # copy somewhere -- git does NOT back these up.
 cast
+family.md
 bits/private/

@@ -8,12 +8,13 @@
 
 PIPER="$HOME/venvs/piper/bin/piper"
 MODEL="$HOME/piper-voices/en_GB-alan-medium.onnx"
+PACE=0.67   # length-scale: smaller is faster; 0.67 ~= 1.5x speed
 
 [ -n "$1" ] || { echo "usage: mikesay \"text\" [out.wav]" >&2; exit 2; }
 
 if [ -n "$2" ]; then
-    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" -f "$2" 2>/dev/null
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --length-scale "$PACE" -f "$2" 2>/dev/null
 else
-    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --output-raw 2>/dev/null |
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --length-scale "$PACE" --output-raw 2>/dev/null |
         aplay -q -r 22050 -f S16_LE -t raw -
 fi
