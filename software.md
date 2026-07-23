@@ -49,6 +49,95 @@ Future brain programs (persona daemon, speech, vision) are all Pi-side
 and speak the same protocol. The one-reader rule means there will be a
 single port-owning process the rest talk to, never multiple openers.
 
+## Voice — the double act
+
+Mike's first behaviour (before ears or vision): a two-character voice
+act. MIKE, articulate and put-upon, argues with the body's voice — the
+nameless BODY, all-caps monotone, barely intelligible on purpose. Both
+are rendered on the Pi through the one mono speaker (`hardware.md`,
+Audio); the ESP32 never touches audio. What keeps it honest: BODY lines
+are triggered by real protocol data, so the sketch is a dramatization of
+actual wire traffic.
+
+### Engines
+
+- MIKE — Piper (neural TTS, local, faster than real-time on the Pi 5).
+  Run resident: text lines in on stdin, raw audio streamed to ALSA —
+  model loads once, response is effectively instant.
+- BODY — espeak-ng (formant synthesis, no model). Spawned per line;
+  it's instant anyway. The `-a`/`-s`/`-p` flags (amplitude, speed,
+  pitch) are the escalation levers: same line again, LOUDER and
+  SLOWER, then spelled out.
+- No runtime LLM — deliberate. Curated lines never miss; a small model
+  misses in front of the audience, and wit is what tiny models are
+  worst at. Generation happens offline (Claude as writer's room), the
+  rover ships deterministic flat files. Revisit only if/when a local
+  model exists that is reliably in-character on this class of hardware.
+
+### Content — one file per bit
+
+Chit-chat lives in `rpi/bits/`, one plain-text file per *bit* (a gag,
+sketch, or pool of one-liners). The program scans the directory at
+start; a new gag is a new file, no code change. The format is the
+contract with human contributors — writable in a text editor with no
+programming:
+
+    # battery-low.bit — the body nags, Mike deflects
+    trigger: battery_low
+    mode: script
+    cooldown: 3600
+
+    BODY: BATTERY LOW.
+    MIKE: I am perfectly aware of that.
+    BODY: BATTERY LOW.
+    MIKE: You are not {helping|contributing|part of the solution}.
+    BODY: CRITICAL BATTERY.
+    MIKE: Now you're just being {dramatic|operatic|hysterical}.
+
+- `#` comments; `key: value` header; blank line; then `SPEAKER: text`
+  lines.
+- `mode: script` plays the lines in order (a sketch). `mode: pool`
+  picks one line per firing (a grab-bag of grumbles). Default: script.
+- `{a|b|c}` picks one variant, via a shuffle-bag (every variant dealt
+  once before any repeats). Pool files get a shuffle-bag over lines the
+  same way.
+- `cooldown:` seconds before the bit may fire again.
+- Deliberate repetition is allowed and good: catchphrases are just
+  lines without variants — familiar skeleton, fresh flesh.
+
+### Triggers
+
+Bits name their trigger; the voice program defines the set — this is
+the contract between code and content. Thresholds live in code, never
+in bit files, so bits stay pure content. Initial set: `boot`, `idle`,
+`battery_low`, `battery_critical`, `watchdog_trip`, `jolt`,
+`goodnight`, `nothing_happens`. Grows as sensors land.
+
+### Scheduler — silence is the default
+
+The anti-tiresome machinery. A bit every ten-plus minutes feels alive;
+every two minutes is a toy with no off switch.
+
+- Event bits fire on their trigger, subject to cooldown. Safety-class
+  lines (battery critical) always speak.
+- Spontaneous (`idle`) bits are gated by Mike's mood: a sum of two or
+  three slow sines with random phases at boot, plus impulses from real
+  events that decay away. The BODY's apparent mood is derived from
+  physiology — telemetry (voltage, temperature, IMU jolts). Both moods
+  are computed on the Pi; the ESP has no mood, it's a part.
+- A literal grumpiness knob — potentiometer on an ESP ADC, one more
+  telemetry key — scales the spontaneous rate only. Facts bypass the
+  knob. (Pot goes on the parts list when the knob is specced.)
+
+### Testing seam
+
+`mikesay` / `bodysay` speak one line each from the command line — they
+prove the audio chain the day the amp arrives. The voice program itself
+reads protocol events on stdin (same pattern as `mike`), so whole
+scenes rehearse by piping synthetic telemetry — no rover, no port.
+Port discipline is unchanged: one reader; picocom stays the ESP-poking
+tool.
+
 ## Toolchains
 
 - ESP: ESP-IDF at `~/esp/esp-idf` (a v6.1-dev checkout), target
@@ -80,3 +169,9 @@ dependencies:
   — guide: https://learn.adafruit.com/lsm6dsox-and-ism330dhc-6-dof-imu
 - SSD1306 OLED — no vendor page; datasheet is linked from the guide:
   https://learn.adafruit.com/monochrome-oled-breakouts
+
+Voice:
+
+- Piper TTS: https://github.com/rhasspy/piper (see README for the
+  current maintained home) — voices: https://huggingface.co/rhasspy/piper-voices
+- espeak-ng: https://github.com/espeak-ng/espeak-ng
