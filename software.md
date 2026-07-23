@@ -26,10 +26,14 @@ ESP-IDF project, plain C, one source file: `main/mike_main.c`.
 - Logging is disabled (`esp_log_level_set` to NONE) because UART0 is the
   command channel; the console moves to the native-USB port later.
 - Peripherals in use: UART0 (esp_driver_uart), RMT TX for the WS2812 LED
-  (esp_driver_rmt, 10 MHz bytes encoder), esp_timer for the lease clock.
+  (esp_driver_rmt, 10 MHz bytes encoder), esp_timer for the lease clock,
+  I2C master (esp_driver_i2c) on GPIO8/9 at 400 kHz — LSM6DSOX driver:
+  WHOAMI probe + config at boot, 12-byte gyro+accel burst per `tel`,
+  pitch/roll computed from accel (float internally, integers on the
+  wire). An absent or unplugged IMU degrades to `imu=0`, never an error.
 - Next: LEDC for servo/ESC PWM (50 Hz, microsecond pulses — the
   centre/endpoint/direction calibration constants live here, per
-  protocol.md), then I2C master for INA219 / LSM6DSOX / SSD1306.
+  protocol.md), then INA219 and SSD1306 on the same I2C bus.
   `out_throttle()` / `out_steer()` are the stubs real PWM replaces.
 - Component dependencies are declared in `main/CMakeLists.txt`
   (PRIV_REQUIRES); add there when a new driver is pulled in.

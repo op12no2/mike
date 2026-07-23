@@ -3,9 +3,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "driver/uart.h"
 #include "driver/rmt_tx.h"
 #include "driver/rmt_encoder.h"
+#include "driver/i2c_master.h"
 #include "esp_timer.h"
 #include "esp_log.h"
 
@@ -68,6 +70,67 @@ static void led_set(int r, int g, int b)
   rmt_transmit_config_t tc = { 0 };
   rmt_transmit(led_chan, led_enc, grb, sizeof grb, &tc);
   rmt_tx_wait_all_done(led_chan, 100);
+}
+
+/* LSM6DSOX IMU: I2C on GPIO8/9, pitch/roll/moving in tel. See protocol.md. */
+
+#define I2C_SDA     8
+#define I2C_SCL     9
+#define IMU_ADDR    0x6A        /* SA0 low */
+#define IMU_WHOAMI  0x6C
+#define MOVE_LSB    300         /* raw gyro LSB, ~5 deg/s at 500 dps FS */
+
+static i2c_master_dev_handle_t imu;
+static int imu_ok;              /* probed and configured at boot */
+
+static int imu_rd(uint8_t reg, uint8_t *dst, size_t n)
+{
+  return i2c_master_transmit_receive(imu, &reg, 1, dst, n, 50) != ESP_OK;
+}
+
+static int imu_wr(uint8_t reg, uint8_t val)
+{
+  uint8_t b[2] = { reg, val };
+  return i2c_master_transmit(imu, b, sizeof b, 50) != ESP_OK;
+}
+
+static void imu_init(void)
+{
+  i2c_master_bus_config_t bc = {
+    .i2c_port          = -1,
+    .sda_io_num        = I2C_SDA,
+    .scl_io_num        = I2C_SCL,
+    .clk_source        = I2C_CLK_SRC_DEFAULT,
+    .glitch_ignore_cnt = 7,     /* the breakout carries the pull-ups */
+  };
+  i2c_device_config_t dc = {
+    .dev_addr_length = I2C_ADDR_BIT_LEN_7,
+    .device_address  = IMU_ADDR,
+    .scl_speed_hz    = 400 * 1000,
+  };
+  i2c_master_bus_handle_t bus;
+  uint8_t id;
+
+  if (i2c_new_master_bus(&bc, &bus) != ESP_OK ||
+      i2c_master_bus_add_device(bus, &dc, &imu) != ESP_OK ||
+      imu_rd(0x0F, &id, 1) || id != IMU_WHOAMI ||  /* WHO_AM_I */
+      imu_wr(0x10, 0x48) ||   /* CTRL1_XL: 104 Hz, +-4 g */
+      imu_wr(0x11, 0x44))     /* CTRL2_G:  104 Hz, 500 dps */
+    return;
+  imu_ok = 1;
+}
+
+/* one burst read, gyro then accel; raw counts, orientation fixed at mounting */
+static int imu_read(int16_t g[3], int16_t a[3])
+{
+  uint8_t raw[12];
+  if (!imu_ok || imu_rd(0x22, raw, sizeof raw))    /* OUTX_L_G onward */
+    return -1;
+  for (int i = 0; i < 3; i++) {
+    g[i] = (int16_t)(raw[i * 2]     | raw[i * 2 + 1] << 8);
+    a[i] = (int16_t)(raw[6 + i * 2] | raw[7 + i * 2] << 8);
+  }
+  return 0;
 }
 
 /* protocol */
@@ -164,11 +227,25 @@ static void dispatch(char *line)
   }
 
   if (!strcmp(verb, "tel")) {
+    int16_t g[3], a[3];
     if (strtok(NULL, " ")) { reply("eh?"); return; }
-    snprintf(out, sizeof out,
+    int n = snprintf(out, sizeof out,
              "ok up_ms=%lld armed=%d wdtrips=%u thr=%d str=%d",
              (long long)(esp_timer_get_time() / 1000),
              armed, wdtrips, thr, str);
+    if (!imu_read(g, a)) {
+      long pitch = lrintf(atan2f(-a[0],
+                     sqrtf((float)a[1] * a[1] + (float)a[2] * a[2]))
+                     * (180000.0f / (float)M_PI));
+      long roll  = lrintf(atan2f(a[1], a[2]) * (180000.0f / (float)M_PI));
+      int moving = abs(g[0]) > MOVE_LSB || abs(g[1]) > MOVE_LSB ||
+                   abs(g[2]) > MOVE_LSB;
+      snprintf(out + n, sizeof out - n,
+               " imu=1 pitch_mdeg=%ld roll_mdeg=%ld moving=%d",
+               pitch, roll, moving);
+    } else {
+      snprintf(out + n, sizeof out - n, " imu=0");
+    }
     reply(out);
     return;
   }
@@ -193,6 +270,7 @@ void app_main(void)
   uart_param_config(UART, &cfg);
 
   led_init();
+  imu_init();
 
   static char line[CMD_MAX];
   int len = 0, drop = 0;

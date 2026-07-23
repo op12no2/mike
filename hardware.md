@@ -205,8 +205,8 @@ pull-ups; no address conflicts.
 |---|---|
 | 4 | steering servo PWM (LEDC, 50 Hz) |
 | 5 | throttle PWM to Fusion SE (LEDC, 50 Hz) |
-| 8 | I2C SDA (STEMMA QT daisy chain) — planned |
-| 9 | I2C SCL (STEMMA QT daisy chain) — planned |
+| 8 | I2C SDA (STEMMA QT daisy chain) |
+| 9 | I2C SCL (STEMMA QT daisy chain) |
 | 38 | onboard WS2812 LED (GPIO48 on some board revisions) |
 
 Keep clear: GPIO26–37 (flash and PSRAM on the WROOM-1 N8R8 module),

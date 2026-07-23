@@ -85,9 +85,12 @@ keys without a version bump.
 | `wdtrips` | count | lease expiries since boot |
 | `thr` | −1000…1000 | applied throttle |
 | `str` | −1000…1000 | applied steering |
+| `imu` | 0/1 | LSM6DSOX present and readable this poll; when 0 the three keys below are omitted |
+| `pitch_mdeg` | millidegrees | static tilt from the accelerometer; axis orientation and signs get fixed at mounting |
+| `roll_mdeg` | millidegrees | static tilt from the accelerometer |
+| `moving` | 0/1 | rotating faster than ~5°/s on any axis right now (instantaneous, not latched) |
 
-Planned: `vbat_mv`, `ibat_ma` (INA219), `pitch_mdeg`, `roll_mdeg`,
-`moving` (LSM6DSOX).
+Planned: `vbat_mv`, `ibat_ma` (INA219).
 
 ## Versioning
 
