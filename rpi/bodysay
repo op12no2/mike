@@ -1,0 +1,21 @@
+#!/bin/sh
+# bodysay -- speak one line as the BODY (espeak-ng: low, slow, robotic).
+#
+#   bodysay "TEXT"            play on the default ALSA device
+#   bodysay "TEXT" out.wav    write a wav instead (no speaker needed)
+#
+# Escalation levers are the espeak flags: louder is -a, slower is -s,
+# lower is -p (software.md, Voice). These defaults are the calm state.
+
+PITCH=25
+SPEED=130
+AMP=120
+VOICE=en-gb
+
+[ -n "$1" ] || { echo "usage: bodysay \"TEXT\" [out.wav]" >&2; exit 2; }
+
+if [ -n "$2" ]; then
+    espeak-ng -v "$VOICE" -p "$PITCH" -s "$SPEED" -a "$AMP" -w "$2" "$1"
+else
+    espeak-ng -v "$VOICE" -p "$PITCH" -s "$SPEED" -a "$AMP" "$1"
+fi

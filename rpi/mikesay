@@ -1,0 +1,19 @@
+#!/bin/sh
+# mikesay -- speak one line as MIKE (Piper, en_GB-alan-medium).
+#
+#   mikesay "text"            play on the default ALSA device
+#   mikesay "text" out.wav    write a wav instead (no speaker needed)
+#
+# Proves the MIKE half of the audio chain (software.md, Voice).
+
+PIPER="$HOME/venvs/piper/bin/piper"
+MODEL="$HOME/piper-voices/en_GB-alan-medium.onnx"
+
+[ -n "$1" ] || { echo "usage: mikesay \"text\" [out.wav]" >&2; exit 2; }
+
+if [ -n "$2" ]; then
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" -f "$2" 2>/dev/null
+else
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --output-raw 2>/dev/null |
+        aplay -q -r 22050 -f S16_LE -t raw -
+fi

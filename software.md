@@ -144,6 +144,10 @@ tool.
   `esp32s3`; `esptool` in `~/venvs/esp`. Build and flash commands are in
   CLAUDE.md.
 - Pi: system gcc and make.
+- Voice: espeak-ng from apt; Piper in `~/venvs/piper` (pip `piper-tts`),
+  voices in `~/piper-voices` (currently `en_GB-alan-medium`). Test
+  tools `rpi/mikesay` / `rpi/bodysay` speak one line each, to ALSA or
+  to a wav.
 
 ## References
 
