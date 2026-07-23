@@ -1,9 +1,0 @@
-# watchdog.bit — the lease tripped and the body stopped the motors
-trigger: watchdog_trip
-mode: script
-cooldown: 300
-
-BODY: LEASE EXPIRED. MOTORS STOPPED.
-MIKE: {I stopped on purpose.|That was intentional.|I meant to do that.}
-BODY: DISARMED.
-MIKE: We're calling it a rest.

@@ -1,4 +1,4 @@
-# Mike body protocol — version 1
+# Mike body protocol — version 2
 
 The wire between the brain (Pi 5) and the body (ESP32-S3): UART0 over the
 devkit USB cable, `/dev/ttyUSB0`, 115200 8N1. This file is the single
@@ -34,13 +34,19 @@ Argument counts are strict: too many or too few is `eh?`.
 | command | reply | notes |
 |---|---|---|
 | `ping` | `pong` | link check |
-| `ver` | `mike 1` | checked by the brain at connect |
+| `ver` | `mike 2` | checked by the brain at connect |
 | `arm` | `ok` | enables motion, starts the throttle lease |
 | `disarm` | `ok` | throttle neutral, lease off; the resting state |
 | `drv <thr> <str>` | `ok <thr> <str>` | −1000…1000 each; `no disarmed` when disarmed; reply echoes the values actually applied after clamping |
 | `stop` | `ok` | throttle neutral now, stays armed, refreshes the lease |
 | `led <r> <g> <b>` | `ok` | onboard RGB, 0…255 each |
-| `tel` | `ok k=v k=v …` | all telemetry, one line |
+| `tel` | `ok k=v k=v …` | body state; pure state echo, touches no sensor |
+| `imu` | `ok k=v k=v …` | one LSM6DSOX read |
+
+One query per sensor, deliberately: the brain polls each at its own
+rate (a rate is brain policy, not protocol), and a slow or absent
+sensor never delays the others. A new sensor is a new query verb —
+planned: `pwr` (INA219: `vbat_mv`, `ibat_ma`).
 
 ## Safety model
 
@@ -52,8 +58,8 @@ that the rover stopped underneath it. While armed the brain streams
 `drv` at ~10 Hz even when the values are unchanged (`drv 0 0` when
 stationary but armed).
 
-- `tel` does **not** feed the lease: a live telemetry poller with a dead
-  drive loop must not keep the wheels leased.
+- Telemetry queries (`tel`, `imu`, …) do **not** feed the lease: a live
+  poller with a dead drive loop must not keep the wheels leased.
 - Boot state: disarmed, throttle neutral. Once PWM exists, neutral is
   emitted continuously from before the first command is accepted, and a
   lease trip keeps *emitting* neutral rather than dropping the signal —
@@ -74,9 +80,11 @@ applied values so clamping is visible.
 
 ## Telemetry keys
 
-`tel` replies `ok` followed by space-separated `key=value` pairs, all
-integers. The brain must ignore keys it doesn't know — new sensors add
-keys without a version bump.
+Telemetry replies are `ok` followed by space-separated `key=value`
+pairs, all integers. The brain must ignore keys it doesn't know — new
+keys arrive without a version bump.
+
+`tel` — body state:
 
 | key | unit | meaning |
 |---|---|---|
@@ -85,12 +93,18 @@ keys without a version bump.
 | `wdtrips` | count | lease expiries since boot |
 | `thr` | −1000…1000 | applied throttle |
 | `str` | −1000…1000 | applied steering |
-| `imu` | 0/1 | LSM6DSOX present and readable this poll; when 0 the three keys below are omitted |
+
+`imu` — LSM6DSOX:
+
+| key | unit | meaning |
+|---|---|---|
+| `imu` | 0/1 | present and readable this poll; when 0 the keys below are omitted |
 | `pitch_mdeg` | millidegrees | static tilt from the accelerometer; axis orientation and signs get fixed at mounting |
 | `roll_mdeg` | millidegrees | static tilt from the accelerometer |
 | `moving` | 0/1 | rotating faster than ~5°/s on any axis right now (instantaneous, not latched) |
 
-Planned: `vbat_mv`, `ibat_ma` (INA219).
+Planned: `pwr` with `vbat_mv`, `ibat_ma` (INA219); a `grump` key for
+the grumpiness knob (potentiometer on an ESP ADC) when it is specced.
 
 ## Versioning
 
@@ -98,6 +112,9 @@ Planned: `vbat_mv`, `ibat_ma` (INA219).
 not a bump; changing the meaning or shape of anything existing is. The
 brain checks `ver` at connect and refuses to drive a body it doesn't
 understand.
+
+History: v1 folded the IMU keys into `tel`; v2 split telemetry into
+per-sensor queries so each can be polled at its own rate.
 
 ## Port ownership
 

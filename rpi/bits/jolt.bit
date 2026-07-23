@@ -1,9 +1,0 @@
-# jolt.bit — moved, but nobody commanded it: being carried
-trigger: jolt
-mode: script
-cooldown: 120
-
-BODY: MOTION. NOT COMMANDED.
-MIKE: {Put me down.|I am being carried. Wonderful.|Up we go. Nobody asked me.}
-BODY: ALTITUDE UNKNOWN.
-MIKE: {I have wheels for a reason.|I don't do heights. I barely do flat.|Gently. I'm vintage. Technically.}

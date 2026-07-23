@@ -1,10 +1,10 @@
 #!/bin/sh
-# mikesay -- speak one line as MIKE (Piper, en_GB-alan-medium).
+# mikesay -- speak one line in Mike's voice (Piper, en_GB-alan-medium).
 #
 #   mikesay "text"            play on the default ALSA device
 #   mikesay "text" out.wav    write a wav instead (no speaker needed)
 #
-# Proves the MIKE half of the audio chain (software.md, Voice).
+# Proves the audio chain (software.md, Voice).
 
 PIPER="$HOME/venvs/piper/bin/piper"
 MODEL="$HOME/piper-voices/en_GB-alan-medium.onnx"

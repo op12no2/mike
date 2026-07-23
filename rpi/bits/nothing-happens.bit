@@ -1,7 +1,0 @@
-# nothing-happens.bit — the body's answer to the unknown, as foretold
-trigger: nothing_happens
-mode: script
-cooldown: 60
-
-BODY: NOTHING HAPPENS.
-MIKE: {You heard him.|As foretold.|Story of my life.}

@@ -11,7 +11,7 @@
 #include "esp_timer.h"
 #include "esp_log.h"
 
-#define PROTO_VER   1
+#define PROTO_VER   2
 #define UART        UART_NUM_0
 #define BUF_SIZE    1024
 #define CMD_MAX    120
@@ -227,12 +227,18 @@ static void dispatch(char *line)
   }
 
   if (!strcmp(verb, "tel")) {
-    int16_t g[3], a[3];
     if (strtok(NULL, " ")) { reply("eh?"); return; }
-    int n = snprintf(out, sizeof out,
+    snprintf(out, sizeof out,
              "ok up_ms=%lld armed=%d wdtrips=%u thr=%d str=%d",
              (long long)(esp_timer_get_time() / 1000),
              armed, wdtrips, thr, str);
+    reply(out);
+    return;
+  }
+
+  if (!strcmp(verb, "imu")) {
+    int16_t g[3], a[3];
+    if (strtok(NULL, " ")) { reply("eh?"); return; }
     if (!imu_read(g, a)) {
       long pitch = lrintf(atan2f(-a[0],
                      sqrtf((float)a[1] * a[1] + (float)a[2] * a[2]))
@@ -240,11 +246,11 @@ static void dispatch(char *line)
       long roll  = lrintf(atan2f(a[1], a[2]) * (180000.0f / (float)M_PI));
       int moving = abs(g[0]) > MOVE_LSB || abs(g[1]) > MOVE_LSB ||
                    abs(g[2]) > MOVE_LSB;
-      snprintf(out + n, sizeof out - n,
-               " imu=1 pitch_mdeg=%ld roll_mdeg=%ld moving=%d",
+      snprintf(out, sizeof out,
+               "ok imu=1 pitch_mdeg=%ld roll_mdeg=%ld moving=%d",
                pitch, roll, moving);
     } else {
-      snprintf(out + n, sizeof out - n, " imu=0");
+      snprintf(out, sizeof out, "ok imu=0");
     }
     reply(out);
     return;

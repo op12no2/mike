@@ -1,9 +1,0 @@
-# boot.bit — waking up, reluctantly
-trigger: boot
-mode: script
-cooldown: 60
-
-BODY: SYSTEMS ONLINE.
-MIKE: {Already?|Oh. I was somewhere nice.|And whose idea was this?}
-BODY: ALL CHECKS PASSED.
-MIKE: {Don't sound so pleased about it.|A shame.|Noted. With regret.}

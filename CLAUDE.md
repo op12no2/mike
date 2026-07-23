@@ -66,7 +66,9 @@ port free.
   a hang), without `--echo` you can't see your own typing. `minicom` is
   also installed. Either counts as the port's one reader.
 - `rpi/mike` reads protocol lines on stdin and prints the replies:
-  `printf 'ping\ntel\n' | ./mike` — good for scripted tests.
+  `printf 'ping\ntel\n' | ./mike` — good for scripted tests. It also
+  polls each sensor at its own rate; `-l` (or typing `/log`) echoes
+  the polled data to stdout.
 
 ## Hardware notes
 
@@ -121,17 +123,21 @@ ritual:
 
 ## Status / roadmap
 
-State as of 2026-07-21. Physical: rolling chassis — wheels on, motor and
+State as of 2026-07-23. Physical: rolling chassis — wheels on, motor and
 steering servo mounted (steering linkage adjusted to clear a bind at one
 end of travel; firmware endpoint calibration must respect the mechanical
 limits). Battery and power-harness parts on order; junction materials
 and ESC program card to order (parts.md). Pi/ESP/buck not yet mounted. Software:
 full toolchain on the Pi, ESP-IDF cross-compile +
-flash loop proven, protocol v1 specced (`protocol.md`) and implemented —
-command dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel),
-throttle-lease watchdog, onboard LED via RMT, Pi-side line client.
+flash loop proven, protocol v2 specced (`protocol.md`) and implemented —
+command dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel/imu),
+throttle-lease watchdog, onboard LED via RMT, LSM6DSOX IMU driver,
+Pi-side line client + per-sensor telemetry poller. The body-voice
+double act was built and then removed 2026-07-23 (the audience found
+it weird, not funny) — conversations are reserved for Mike and humans;
+the grumpiness knob survives it.
 
 Next on the bench: build the power harness when parts arrive (see
 `hardware.md`), mount the electronics. Next in firmware: servo/ESC PWM
-out (LEDC), I2C sensors (INA219, LSM6DSOX) and real telemetry keys, OLED
-status display. Then the brain: speech, vision, persona.
+out (LEDC), INA219 (`pwr` telemetry), OLED status display. Then the
+brain: speech, vision, persona.
