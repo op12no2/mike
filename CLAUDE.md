@@ -103,6 +103,11 @@ ritual:
 
 - Plain C, hand-authored, KISS. No frameworks beyond ESP-IDF itself, no
   dependency sprawl. If it can be a flat file and a Makefile, it is.
+- **Mike is a local entity.** In operation he is never connected to the
+  internet: no cloud services, no remote APIs, nothing that stops
+  working in a field. Speech, hearing, vision, persona — all run on his
+  own hardware. The bench uses the network to *build* him (git,
+  packages, voice models); the rover needs none of it to *be* him.
 - Unknown serial commands are answered with `Nothing happens.` — this is
   load-bearing culture (Colossal Cave; the human is `xyzzy`), not a TODO.
 - Failures should degrade toward stillness: watchdog stops the motors when
