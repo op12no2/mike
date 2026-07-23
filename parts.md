@@ -52,4 +52,7 @@ What to buy and where from. How it's wired is `hardware.md`.
 
 - TBD at shell layout: chunky momentary "goodnight button" (see CLAUDE.md,
   session end).
+- In hand: Bambu Lab P2S + AMS Pro 3D printer — shell, electronics
+  tray, speaker grille, mic port, knob/button housings are printable
+  at shell layout.
 - Running total: ~£1071 (2026-07-22).

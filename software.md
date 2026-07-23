@@ -104,6 +104,11 @@ programming:
 - `cooldown:` seconds before the bit may fire again.
 - Deliberate repetition is allowed and good: catchphrases are just
   lines without variants — familiar skeleton, fresh flesh.
+- Family data never reaches the public repo: `rpi/cast` (who's here
+  today — see `cast.example` for the format) and `rpi/bits/private/`
+  (family in-joke bits) are gitignored and live only on the Pi. The
+  scanner reads subdirectories, so private bits play like any other.
+  Git does not back these up — keep a private copy somewhere.
 
 ### Triggers
 
