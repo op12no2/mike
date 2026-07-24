@@ -78,8 +78,9 @@ deliberately unstated yet: it gets chosen with the grandchildren
   CLAUDE.md.
 - Pi: system gcc and make.
 - Voice: Piper in `~/venvs/piper` (pip `piper-tts`), voices in
-  `~/piper-voices` (currently `en_GB-alan-medium`). `rpi/mikesay`
-  speaks one line, to ALSA or to a wav.
+  `~/piper-voices` (currently `en_GB-semaine-medium`, speaker
+  `prudence` — chosen 2026-07-24 over the adult `alan`; the audience
+  again). `rpi/mikesay` speaks one line, to ALSA or to a wav.
 
 ## References
 

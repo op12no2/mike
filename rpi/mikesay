@@ -1,5 +1,6 @@
 #!/bin/sh
-# mikesay -- speak one line in Mike's voice (Piper, en_GB-alan-medium).
+# mikesay -- speak one line in Mike's voice (Piper, en_GB-semaine-medium,
+# speaker "prudence").
 #
 #   mikesay "text"            play on the default ALSA device
 #   mikesay "text" out.wav    write a wav instead (no speaker needed)
@@ -7,14 +8,15 @@
 # Proves the audio chain (software.md, Voice).
 
 PIPER="$HOME/venvs/piper/bin/piper"
-MODEL="$HOME/piper-voices/en_GB-alan-medium.onnx"
+MODEL="$HOME/piper-voices/en_GB-semaine-medium.onnx"
+SPEAKER=0   # semaine is multi-speaker; 0 = prudence (see the .onnx.json map)
 PACE=0.75   # length-scale: smaller is faster; 0.67 ~= 1.5x speed
 
 [ -n "$1" ] || { echo "usage: mikesay \"text\" [out.wav]" >&2; exit 2; }
 
 if [ -n "$2" ]; then
-    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --length-scale "$PACE" -f "$2" 2>/dev/null
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --speaker "$SPEAKER" --length-scale "$PACE" -f "$2" 2>/dev/null
 else
-    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --length-scale "$PACE" --output-raw 2>/dev/null |
+    printf '%s\n' "$1" | "$PIPER" -m "$MODEL" --speaker "$SPEAKER" --length-scale "$PACE" --output-raw 2>/dev/null |
         aplay -q -r 22050 -f S16_LE -t raw -
 fi
