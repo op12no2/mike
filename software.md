@@ -67,9 +67,9 @@ performs for itself. One mono voice through the one speaker
 (`hardware.md`, Audio); the ESP32 never touches audio. Piper (neural
 TTS, local, faster than real-time on the Pi 5) is the engine;
 `rpi/mikesay` speaks one line from the command line and proves the
-audio chain the day the amp arrives. A grumpiness knob (potentiometer
-on an ESP ADC, a `grump` telemetry key) will scale how chatty he is —
-the label is already canon (`parts.md`).
+audio chain the day the amp arrives. What he says — the persona — is
+deliberately unstated yet: it gets chosen with the grandchildren
+(CLAUDE.md), and nothing in the audio chain depends on it.
 
 ## Toolchains
 

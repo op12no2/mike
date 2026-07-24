@@ -1,9 +1,10 @@
 # Mike
 
-Grumpy companion rover for Colin's grandchildren. Persona: Marvin-adjacent —
-reluctant, put-upon, secretly devoted. The goal is theatre, not utility: he
-detects the grandchildren, rolls up to them, and chats (locally-run speech,
-eventually). Slow and torquey, never fast. Reliability and simplicity are
+Companion rover for Colin's grandchildren. He will have a persona —
+that much is settled — but it is deliberately unstated: it gets chosen
+with the grandchildren, not for them. The goal is theatre, not utility:
+he detects the grandchildren, rolls up to them, and chats (locally-run
+speech, eventually). Slow and torquey, never fast. Reliability and simplicity are
 paramount; cost is not a constraint. Typical outing is the garden or
 park on a dry day; the beach is a nice-to-have — weather-proof where
 cheap, don't gate decisions on it.
@@ -93,7 +94,7 @@ and the LiPo must be physically unplugged after every session regardless
 ritual:
 
 1. Kid pulls the XT60 loop (ESC branch) — motion dead by physics; Mike
-   stays up and grumbles about it.
+   stays up and can still talk.
 2. Kid says goodnight — clean poweroff with a farewell line. Until speech
    exists: a protocol command or the Pi 5 power button. A chunky external
    momentary button on the shell, wired to the Pi 5's power-button pads,
@@ -134,8 +135,10 @@ command dispatch on the ESP (ping/ver/arm/disarm/drv/stop/led/tel/imu),
 throttle-lease watchdog, onboard LED via RMT, LSM6DSOX IMU driver,
 Pi-side line client + per-sensor telemetry poller. The body-voice
 double act was built and then removed 2026-07-23 (the audience found
-it weird, not funny) — conversations are reserved for Mike and humans;
-the grumpiness knob survives it.
+it weird, not funny) — conversations are reserved for Mike and humans.
+The grumpy persona (and its knob) was dropped 2026-07-24 after a
+road-test with the audience; persona is now deliberately TBD, chosen
+with the grandchildren.
 
 Next on the bench: build the power harness when parts arrive (see
 `hardware.md`), mount the electronics. Next in firmware: servo/ESC PWM

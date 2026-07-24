@@ -1,10 +1,10 @@
 # Mike
 
-A grumpy rover.
+A companion rover.
 
 An Axial SCX10 III crawler chassis carrying a Raspberry Pi 5 and an ESP32-S3.
 
-The goal is theatre, not utility: he trundles over and complains about it (think Marvin).
+The goal is theatre, not utility: he trundles over and chats. Who he is — the persona — is still to be decided, with the grandchildren.
 
 Unknown serial commands are answered with "Nothing happens."
 

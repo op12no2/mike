@@ -103,8 +103,7 @@ keys arrive without a version bump.
 | `roll_mdeg` | millidegrees | static tilt from the accelerometer |
 | `moving` | 0/1 | rotating faster than ~5°/s on any axis right now (instantaneous, not latched) |
 
-Planned: `pwr` with `vbat_mv`, `ibat_ma` (INA219); a `grump` key for
-the grumpiness knob (potentiometer on an ESP ADC) when it is specced.
+Planned: `pwr` with `vbat_mv`, `ibat_ma` (INA219).
 
 ## Versioning
 
